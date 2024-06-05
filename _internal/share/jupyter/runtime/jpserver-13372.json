@@ -1,0 +1,13 @@
+{
+  "base_url": "/",
+  "hostname": "localhost",
+  "password": false,
+  "pid": 13372,
+  "port": 8888,
+  "root_dir": "C:\\Users\\natha",
+  "secure": false,
+  "sock": "",
+  "token": "03d40f9849da5621508684e360867f0c8ef66c8f0205a76d",
+  "url": "http://localhost:8888/",
+  "version": "1.10.2"
+}

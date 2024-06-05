@@ -1,0 +1,136 @@
+{
+  "name": "@kiteco/jupyterlab-kite",
+  "version": "2.0.2",
+  "description": "Kite integration for JupyterLab",
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension",
+    "lsp",
+    "language-server-protocol",
+    "intellisense",
+    "code-intelligence",
+    "linting",
+    "kite"
+  ],
+  "homepage": "https://github.com/kiteco/jupyterlab-kite",
+  "bugs": {
+    "url": "https://github.com/kiteco/jupyterlab-kite/issues"
+  },
+  "license": "SEE LICENSE IN ../../LICENSE",
+  "contributors": [
+    "Michał Krassowski",
+    "Manhattan Engineering, Inc"
+  ],
+  "files": [
+    "{lib,style,schema,src}/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf,css,json,ts,tsx}"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kiteco/jupyterlab-kite.git"
+  },
+  "scripts": {
+    "build": "jlpm build:schema && jlpm run build:lib && jlpm run build:labextension",
+    "build:labextension": "jupyter labextension build .",
+    "build:labextension:dev": "jupyter labextension build --development True .",
+    "build:lib": "tsc",
+    "build:prod": "jlpm run build:lib && jlpm run build:labextension",
+    "build:schema": "jlpm build:schema-backend",
+    "build:schema-backend": "json2ts ../../python_packages/jupyter_kite/jupyter_kite/schema/schema.json --unreachableDefinitions | prettier --stdin-filepath _schema.d.ts > src/_schema.d.ts",
+    "bundle": "npm pack .",
+    "clean": "jlpm run clean:lib",
+    "clean:all": "jlpm run clean:lib && jlpm run clean:labextension",
+    "clean:labextension": "rimraf labextension",
+    "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
+    "eslint": "eslint . --ext .ts,.tsx --fix",
+    "eslint:check": "eslint . --ext .ts,.tsx",
+    "install:extension": "jupyter labextension develop --overwrite .",
+    "prepare": "jlpm run clean && jlpm run build:prod",
+    "test": "jlpm jest --coverage --coverageReporters=cobertura --coverageReporters=html --coverageReporters=text-summary",
+    "watch": "run-p watch:src watch:labextension",
+    "watch:labextension": "jupyter labextension watch .",
+    "watch:src": "tsc -w"
+  },
+  "dependencies": {
+    "@jupyterlab/builder": "^3.0.0",
+    "jupyterlab_toastify": "^4.1.2",
+    "lsp-ws-connection": "~0.4.0",
+    "semver": "^7.3.2"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.4.3",
+    "@jupyterlab/application": "^3.0.0",
+    "@jupyterlab/apputils": "^3.0.0",
+    "@jupyterlab/cells": "^3.0.0",
+    "@jupyterlab/codeeditor": "^3.0.0",
+    "@jupyterlab/codemirror": "^3.0.0",
+    "@jupyterlab/completer": "^3.0.0",
+    "@jupyterlab/coreutils": "^5.0.0",
+    "@jupyterlab/docmanager": "^3.0.0",
+    "@jupyterlab/docregistry": "^3.0.0",
+    "@jupyterlab/extensionmanager": "^3.0.0",
+    "@jupyterlab/fileeditor": "^3.0.0",
+    "@jupyterlab/notebook": "^3.0.0",
+    "@jupyterlab/rendermime": "^3.0.0",
+    "@jupyterlab/services": "^6.0.0",
+    "@jupyterlab/statusbar": "^3.0.0",
+    "@jupyterlab/testutils": "^3.0.0",
+    "@jupyterlab/tooltip": "^3.0.0",
+    "@lumino/algorithm": "*",
+    "@lumino/widgets": "*",
+    "@types/chai": "^4.1.7",
+    "@types/codemirror": "^0.0.74",
+    "@types/events": "^3.0.0",
+    "@types/jest": "^23.3.11",
+    "@types/semver": "^7.3.4",
+    "chai": "^4.2.0",
+    "codemirror": "*",
+    "events": "^3.0.0",
+    "jest": "^24.7.1",
+    "jest-junit": "^8.0.0",
+    "json-schema-to-typescript": "^8.0.0",
+    "lodash": "^4.17.20",
+    "react": "*",
+    "rimraf": "~2.6.2",
+    "ts-jest": "^24.0.2",
+    "typescript": "^4.0.0"
+  },
+  "peerDependencies": {
+    "@jupyterlab/application": "^3.0.0",
+    "@jupyterlab/apputils": "^3.0.0",
+    "@jupyterlab/cells": "^3.0.0",
+    "@jupyterlab/codeeditor": "^3.0.0",
+    "@jupyterlab/codemirror": "^3.0.0",
+    "@jupyterlab/completer": "^3.0.0",
+    "@jupyterlab/coreutils": "^5.0.0",
+    "@jupyterlab/docmanager": "^3.0.0",
+    "@jupyterlab/docregistry": "^3.0.0",
+    "@jupyterlab/fileeditor": "^3.0.0",
+    "@jupyterlab/notebook": "^3.0.0",
+    "@jupyterlab/rendermime": "^3.0.0",
+    "@jupyterlab/services": "^6.0.0",
+    "@jupyterlab/statusbar": "^3.0.0",
+    "@jupyterlab/tooltip": "^3.0.0",
+    "@lumino/algorithm": "*",
+    "@lumino/widgets": "*",
+    "codemirror": "*",
+    "react": "*"
+  },
+  "jupyterlab": {
+    "extension": true,
+    "discovery": {
+      "server": {
+        "base": {
+          "name": "jupyterlab_kite"
+        },
+        "managers": [
+          "pip"
+        ]
+      }
+    },
+    "schemaDir": "schema",
+    "outputDir": "../../python_packages/jupyterlab_kite/jupyterlab_kite/labextensions/@kiteco/jupyterlab-kite"
+  }
+}
